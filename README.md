@@ -7,7 +7,7 @@ No Bug  and get a 70 score of this assignment !!!
 
 | Xjt  | Yyh  | Zth  | Dgz  | Task Description and part complete situation                 |
 | :--: | :--: | :--: | :--: | ------------------------------------------------------------ |
-|      |      |      |      | Data analyse 数据集分析数据的可视化处理方面图片留存，数据分析图（箱线图，热成像分布图等） |
+|      |      |  √   |      | Data analyse 数据集分析数据的可视化处理方面图片留存，数据分析图（箱线图，热成像分布图等） |
 |      |      |      |      | Dataset pre-processing 数据预处理以及该处理方式针对于该数据集的好处 |
 |      |      |      |      | model choose and why 模型选择和选择模型的原因（稍微写一些原因的说明文档方便写论文） **涉及调参** |
 |      |      |      |      | model compare 模型对比，在选择最终模型前对比使用了哪些模型，哪个模型的性能也可以满足但是存在哪些方面的弱势？**涉及调参** |
