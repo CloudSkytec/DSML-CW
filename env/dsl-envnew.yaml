@@ -14,16 +14,19 @@ dependencies:
   - attrs=24.2.0=py310haa95532_0
   - babel=2.11.0=py310haa95532_0
   - beautifulsoup4=4.12.3=py310haa95532_0
+  - blas=1.0=mkl
   - bleach=4.1.0=pyhd3eb1b0_0
   - brotli=1.1.0=h2466b09_2
   - brotli-bin=1.1.0=h2466b09_2
   - brotli-python=1.0.9=py310hd77b12b_8
   - bzip2=1.0.8=h2bbff1b_6
-  - ca-certificates=2024.11.26=haa95532_0
+  - ca-certificates=2025.2.25=haa95532_0
   - cairo=1.18.0=h32b962e_3
-  - certifi=2024.8.30=py310haa95532_0
+  - certifi=2025.1.31=pyhd8ed1ab_0
   - cffi=1.17.1=py310h827c3e9_0
   - charset-normalizer=3.3.2=pyhd3eb1b0_0
+  - cmdstan=2.33.1=h58f7c43_0
+  - cmdstanpy=1.1.0=py310haa95532_0
   - colorama=0.4.6=py310haa95532_0
   - comm=0.2.1=py310haa95532_0
   - contourpy=1.3.0=py310hc19bc0b_2
@@ -48,14 +51,17 @@ dependencies:
   - graphite2=1.3.13=h63175ca_1003
   - h11=0.14.0=py310haa95532_0
   - harfbuzz=9.0.0=h2bedf89_1
+  - holidays=0.48=py310haa95532_0
   - httpcore=1.0.2=py310haa95532_0
   - httpx=0.27.0=py310haa95532_0
   - icu=75.1=he0c23c2_0
   - idna=3.7=py310haa95532_0
   - imbalanced-learn=0.12.4=pyhd8ed1ab_0
+  - importlib_resources=6.4.0=py310haa95532_0
   - intel-openmp=2024.2.1=h57928b3_1083
   - ipykernel=6.29.5=py310haa95532_0
   - ipython=8.27.0=py310haa95532_0
+  - ipywidgets=8.1.6=pyhd8ed1ab_0
   - jedi=0.19.1=py310haa95532_0
   - jinja2=3.1.4=py310haa95532_0
   - joblib=1.4.2=pyhd8ed1ab_0
@@ -71,15 +77,16 @@ dependencies:
   - jupyterlab=4.2.5=py310haa95532_0
   - jupyterlab_pygments=0.1.2=py_0
   - jupyterlab_server=2.27.3=py310haa95532_0
+  - jupyterlab_widgets=3.0.14=pyhd8ed1ab_0
   - kiwisolver=1.4.7=py310hc19bc0b_0
   - krb5=1.21.3=hdf4eb48_0
   - lcms2=2.16=h67d730c_0
   - lerc=4.0.0=h63175ca_0
-  - libblas=3.9.0=24_win64_mkl
+  - libblas=3.9.0=1_h8933c1f_netlib
   - libbrotlicommon=1.1.0=h2466b09_2
   - libbrotlidec=1.1.0=h2466b09_2
   - libbrotlienc=1.1.0=h2466b09_2
-  - libcblas=3.9.0=24_win64_mkl
+  - libcblas=3.9.0=8_h719fc58_netlib
   - libclang13=19.1.2=default_ha5278ca_0
   - libdeflate=1.22=h2466b09_0
   - libexpat=2.6.3=he0c23c2_0
@@ -89,7 +96,7 @@ dependencies:
   - libiconv=1.17=hcfcfb64_2
   - libintl=0.22.5=h5728263_3
   - libjpeg-turbo=3.0.0=hcfcfb64_1
-  - liblapack=3.9.0=24_win64_mkl
+  - liblapack=3.9.0=8_h719fc58_netlib
   - libpng=1.6.44=h3ca93ac_0
   - libsodium=1.0.18=h62dcd97_0
   - libsqlite=3.46.1=h2466b09_0
@@ -100,17 +107,50 @@ dependencies:
   - libxml2=2.12.7=h0f24e4e_4
   - libxslt=1.1.39=h3df6e99_0
   - libzlib=1.3.1=h2466b09_2
+  - m2-bash=4.3.042=5
+  - m2-coreutils=8.25=102
+  - m2-filesystem=2016.04=4
+  - m2-gcc-libs=5.3.0=4
+  - m2-gmp=6.1.0=3
+  - m2-libiconv=1.14=3
+  - m2-libintl=0.19.7=4
+  - m2-msys2-runtime=2.5.0.17080.65c939c=3
+  - m2-sed=4.2.2=3
+  - m2w64-binutils=2.25.1=5
+  - m2w64-bzip2=1.0.6=6
+  - m2w64-crt-git=5.0.0.4636.2595836=2
+  - m2w64-gcc=5.3.0=6
+  - m2w64-gcc-ada=5.3.0=6
+  - m2w64-gcc-fortran=5.3.0=6
   - m2w64-gcc-libgfortran=5.3.0=6
   - m2w64-gcc-libs=5.3.0=7
   - m2w64-gcc-libs-core=5.3.0=7
+  - m2w64-gcc-objc=5.3.0=6
   - m2w64-gmp=6.1.0=2
+  - m2w64-headers-git=5.0.0.4636.c0ad18a=2
+  - m2w64-isl=0.16.1=2
+  - m2w64-libiconv=1.14=6
+  - m2w64-libmangle-git=5.0.0.4509.2e5a9a2=2
   - m2w64-libwinpthread-git=5.0.0.4634.697f757=2
+  - m2w64-make=4.1.2351.a80a8b8=2
+  - m2w64-mpc=1.0.3=3
+  - m2w64-mpfr=3.1.4=4
+  - m2w64-pkg-config=0.29.1=2
+  - m2w64-toolchain=5.3.0=7
+  - m2w64-toolchain_win-64=2.4.0=0
+  - m2w64-tools-git=5.0.0.4592.90b8472=2
+  - m2w64-windows-default-manifest=6.4=3
+  - m2w64-winpthreads-git=5.0.0.4634.697f757=2
+  - m2w64-zlib=1.2.8=10
   - markupsafe=2.1.3=py310h2bbff1b_0
   - matplotlib=3.9.2=py310h5588dad_1
   - matplotlib-base=3.9.2=py310h37e0a56_1
   - matplotlib-inline=0.1.6=py310haa95532_0
   - mistune=2.0.4=py310haa95532_0
-  - mkl=2024.1.0=h66d3029_694
+  - mkl=2023.2.0=h6a75c08_49573
+  - mkl-service=2.4.0=py310h827c3e9_2
+  - mkl_fft=1.3.11=py310h827c3e9_0
+  - mkl_random=1.2.8=py310hc64d2fc_0
   - msys2-conda-epoch=20160418=1
   - munkres=1.1.4=pyh9f0ad1d_0
   - nbclient=0.8.0=py310haa95532_0
@@ -119,9 +159,10 @@ dependencies:
   - nest-asyncio=1.6.0=py310haa95532_0
   - notebook=7.2.2=py310haa95532_1
   - notebook-shim=0.2.3=py310haa95532_0
-  - numpy=2.1.2=py310hb9d903e_0
+  - numpy=1.26.4=py310h055cbcc_0
+  - numpy-base=1.26.4=py310h65a83cf_0
   - openjpeg=2.5.2=h3d672ee_0
-  - openssl=3.3.2=h2466b09_0
+  - openssl=3.5.0=ha4e3fda_0
   - overrides=7.4.0=py310haa95532_0
   - packaging=24.1=pyhd8ed1ab_0
   - pandas=2.2.3=py310hb4db72f_1
@@ -136,6 +177,7 @@ dependencies:
   - prometheus_client=0.14.1=py310haa95532_0
   - prompt-toolkit=3.0.43=py310haa95532_0
   - prompt_toolkit=3.0.43=hd3eb1b0_0
+  - prophet=1.1.5=py310hdc40269_0
   - psutil=5.9.0=py310h2bbff1b_0
   - pthread-stubs=0.4=hcd874cb_1001
   - pthreads-win32=2.9.1=h2466b09_4
@@ -169,7 +211,6 @@ dependencies:
   - seaborn=0.13.2=hd8ed1ab_2
   - seaborn-base=0.13.2=pyhd8ed1ab_2
   - send2trash=1.8.2=py310haa95532_0
-  - setuptools=75.1.0=py310haa95532_0
   - six=1.16.0=pyh6c4a22f_0
   - sniffio=1.3.0=py310haa95532_0
   - soupsieve=2.5=py310haa95532_0
@@ -185,7 +226,7 @@ dependencies:
   - tomli=2.0.1=py310haa95532_0
   - tornado=6.4.1=py310ha8f682b_1
   - tpot=0.12.2=pyhd8ed1ab_0
-  - tpot-imblearn=0.12.2=hd8ed1ab_0
+  - tpot-imblearn=0.12.2=hd8ed1ab_1
   - tqdm=4.66.5=py310h9909e9c_0
   - traitlets=5.14.3=py310haa95532_0
   - typing-extensions=4.11.0=py310haa95532_0
@@ -202,6 +243,7 @@ dependencies:
   - webencodings=0.5.1=py310haa95532_1
   - websocket-client=1.8.0=py310haa95532_0
   - wheel=0.44.0=py310haa95532_0
+  - widgetsnbextension=4.0.14=pyhd8ed1ab_0
   - win_inet_pton=1.1.0=py310haa95532_0
   - winpty=0.4.3=4
   - xlrd=2.0.1=pyhd3eb1b0_1
@@ -213,4 +255,32 @@ dependencies:
   - zlib=1.3.1=h2466b09_2
   - zstd=1.5.6=h0ea2cb4_0
   - pip:
+      - absl-py==2.2.2
+      - astunparse==1.6.3
+      - flatbuffers==25.2.10
+      - gast==0.6.0
+      - google-pasta==0.2.0
+      - grpcio==1.71.0
+      - h5py==3.13.0
+      - keras==3.9.2
+      - libclang==18.1.1
+      - markdown==3.8
+      - markdown-it-py==3.0.0
+      - mdurl==0.1.2
+      - ml-dtypes==0.5.1
+      - namex==0.0.8
+      - narwhals==1.34.1
+      - opt-einsum==3.4.0
+      - optree==0.15.0
+      - plotly==6.0.1
+      - protobuf==5.29.4
+      - rich==14.0.0
+      - setuptools==78.1.0
+      - tensorboard==2.19.0
+      - tensorboard-data-server==0.7.2
+      - tensorflow==2.19.0
+      - tensorflow-io-gcs-filesystem==0.31.0
+      - termcolor==3.0.1
       - ucimlrepo==0.0.7
+      - werkzeug==3.1.3
+      - wrapt==1.17.2
