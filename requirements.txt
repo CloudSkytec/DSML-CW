@@ -1,0 +1,10 @@
+imbalanced_learn==0.12.4
+imblearn==0.0
+matplotlib==3.10.1
+numpy==2.2.5
+pandas==2.2.3
+scikit_learn==1.6.1
+ta_lib==0.6.3
+torch==2.5.1+cu124
+ucimlrepo==0.0.7
+xgboost==3.0.0
