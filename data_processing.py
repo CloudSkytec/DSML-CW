@@ -28,7 +28,6 @@ FEATURES = [
     'price_volume_ratio', 'vpt', 'close_z_5',
     'support3w_distance',
 
-    # ✅ 新增的增强特征
     'cumulative_return_5w',
     'max_drawdown_5w',
     'bollinger_band_width_5w',
@@ -166,7 +165,6 @@ def load_and_preprocess(path: str | Path, win: int = 8, horizon: int = 1, mode: 
         g["cumulative_return_5w"] = g["close"].pct_change().add(1).rolling(5).apply(np.prod, raw=True) - 1
         g["max_drawdown_5w"] = (g["close"].rolling(5, min_periods=1).max() - g["close"]) / g["close"].rolling(5,
                                                                                                           min_periods=1).max()
-
     # 计算布林带宽度
         rolling_mean = g["close"].rolling(5)
         g["bollinger_band_width_5w"] = 4 * rolling_mean.std() / rolling_mean.mean()

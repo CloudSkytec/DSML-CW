@@ -70,9 +70,7 @@ if __name__ == "__main__":
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.svm import SVC
 
-    # 其他导入不变...
-
-    # 6. 超参数搜索（改了）
+    # 6. 超参数搜索
     grid_xgb = GridSearchCV(
         XGBClassifier(eval_metric="logloss", random_state=42),
         {'max_depth': [3, 5], 'learning_rate': [0.05, 0.1], 'n_estimators': [100, 150]},
@@ -131,6 +129,7 @@ if __name__ == "__main__":
     print("MLP:", grid_mlp.best_params_)
     print("LogReg:", grid_lr.best_params_)
 
+    # 8 融合voting
     voting = VotingClassifier(
         estimators=[
             ("xgb", best_xgb),
@@ -152,7 +151,7 @@ if __name__ == "__main__":
     pr  = average_precision_score(y_test, proba)
     f1  = f1_score(y_test, preds, zero_division=0)
 
-    print("\n📊 测试集整体评估（全局最佳阈值）:")
+    print("测试集整体评估（全局最佳阈值）:")
     print(f"ROC-AUC = {roc:.4f} | PR-AUC = {pr:.4f} | F1 = {f1:.4f} | best_thr = {global_best_thr:.4f}")
 
     # 10. 保存模型
@@ -164,4 +163,3 @@ if __name__ == "__main__":
             "imputer": imputer,
             "best_threshold": global_best_thr
         }, f)
-    print(f"\n✅ 模型保存成功: {SAVE_PATH}")
