@@ -3,12 +3,15 @@ import numpy as np
 import pandas as pd
 import talib
 
+
 def _zscore(series: pd.Series, window: int) -> pd.Series:
     return (series - series.rolling(window).mean()) / (series.rolling(window).std(ddof=0) + 1e-6)
+
 
 def _safe_div(a: pd.Series, b: pd.Series) -> pd.Series:
     b = b.replace(0, np.nan)
     return a / b
+
 
 WINS = [8]
 
@@ -36,33 +39,10 @@ FEATURES = [
 ]
 TIME_FEATURES = ['is_month_end', 'week_of_month', 'month', 'quarter']
 
-# 滑动窗口生成（完整窗口）
-def make_sliding(df_feat: pd.DataFrame, feature_cols, win: int = 8, horizon: int = 1, step: int = 1) -> pd.DataFrame:
-    samples = []
-    for stock, group in df_feat.groupby("stock", sort=False):
-        group = group.reset_index(drop=True)
-        total = len(group) - win - horizon + 1
-        if total <= 0:
-            continue
-        for start in range(0, total, step):
-            window = group.iloc[start:start+win]
-            target = group.iloc[start+win+horizon-1]
-            rec = target[feature_cols].to_dict()
-            rec.update({
-                'win_close_mean': window['close'].mean(),
-                'win_close_std': window['close'].std(ddof=0),
-                'win_pctchg_sum': window['pct_change_price'].sum(),
-                'win_volatility': window['pct_change_price'].std(ddof=0),
-                'win_rsi_mean': window['rsi_3'].mean()
-            })
-            rec['stock'] = stock
-            rec['date'] = target['date']
-            rec['fall_risk'] = target['fall_risk']
-            samples.append(rec)
-    return pd.DataFrame(samples)
 
 # 不完整窗口
-def make_sliding_allow_incomplete(df_feat: pd.DataFrame, feature_cols, win: int = 8, horizon: int = 1, step: int = 1) -> pd.DataFrame:
+def make_sliding_allow_incomplete(df_feat: pd.DataFrame, feature_cols, win: int = 8, horizon: int = 1,
+                                  step: int = 1) -> pd.DataFrame:
     samples = []
     for stock, group in df_feat.groupby("stock", sort=False):
         group = group.reset_index(drop=True)
@@ -71,9 +51,9 @@ def make_sliding_allow_incomplete(df_feat: pd.DataFrame, feature_cols, win: int 
         if max_start <= 0:
             continue
         for start in range(0, max_start, step):
-            end = min(start+win, n)
+            end = min(start + win, n)
             window = group.iloc[start:end]
-            target = group.iloc[min(start+win+horizon-1, n-1)]
+            target = group.iloc[min(start + win + horizon - 1, n - 1)]
             rec = target[feature_cols].to_dict()
             rec.update({
                 'win_close_mean': window['close'].mean(),
@@ -89,40 +69,18 @@ def make_sliding_allow_incomplete(df_feat: pd.DataFrame, feature_cols, win: int 
             samples.append(rec)
     return pd.DataFrame(samples)
 
-# 环形窗口
-def make_sliding_fully_circular(df_feat: pd.DataFrame, feature_cols, win: int = 8, horizon: int = 1, step: int = 1) -> pd.DataFrame:
-    samples = []
-    for stock, group in df_feat.groupby("stock", sort=False):
-        group = group.reset_index(drop=True)
-        n = len(group)
-        if n == 0:
-            continue
-        for start in range(0, n, step):
-            idxs = [(start+i) % n for i in range(win)]
-            window = group.iloc[idxs]
-            target = group.iloc[(start+win+horizon-1) % n]
-            rec = target[feature_cols].to_dict()
-            rec.update({
-                'win_close_mean': window['close'].mean(),
-                'win_close_std': window['close'].std(ddof=0),
-                'win_pctchg_sum': window['pct_change_price'].sum(),
-                'win_volatility': window['pct_change_price'].std(ddof=0),
-                'win_rsi_mean': window['rsi_3'].mean(),
-                'actual_window_len': len(window)
-            })
-            rec['stock'] = stock
-            rec['date'] = target['date']
-            rec['fall_risk'] = target['fall_risk']
-            samples.append(rec)
-    return pd.DataFrame(samples)
 
 # 主函数
-def load_and_preprocess(path: str | Path, win: int = 8, horizon: int = 1, mode: str = "incomplete", step: int = 1) -> pd.DataFrame:
+def load_and_preprocess(path: str | Path, win: int = 8, horizon: int = 1, step: int = 1) -> pd.DataFrame:
     df = pd.read_csv(path)
+
+    # 清洗数据，替换符号并转为浮动数据类型
     for col in ["open", "high", "low", "close", "volume",
                 "next_weeks_open", "next_weeks_close", "days_to_next_dividend", "percent_return_next_dividend"]:
         if col in df.columns:
             df[col] = df[col].replace("[$,]", "", regex=True).astype(float)
+
+    # 处理日期列
     df['date'] = pd.to_datetime(df['date'])
     df = df.sort_values(['stock', 'date']).reset_index(drop=True)
 
@@ -164,12 +122,12 @@ def load_and_preprocess(path: str | Path, win: int = 8, horizon: int = 1, mode: 
         g["quarter"] = g["date"].dt.quarter
         g["cumulative_return_5w"] = g["close"].pct_change().add(1).rolling(5).apply(np.prod, raw=True) - 1
         g["max_drawdown_5w"] = (g["close"].rolling(5, min_periods=1).max() - g["close"]) / g["close"].rolling(5,
-                                                                                                          min_periods=1).max()
-    # 计算布林带宽度
+                                                                                                              min_periods=1).max()
+        # 计算布林带宽度
         rolling_mean = g["close"].rolling(5)
         g["bollinger_band_width_5w"] = 4 * rolling_mean.std() / rolling_mean.mean()
 
-    # 随机指标 K 和 D
+        # 随机指标 K 和 D
         lowest_low = g["low"].rolling(5).min()
         highest_high = g["high"].rolling(5).max()
         g["stochastic_k_5w"] = 100 * (g["close"] - lowest_low) / (highest_high - lowest_low + 1e-6)
@@ -186,16 +144,8 @@ def load_and_preprocess(path: str | Path, win: int = 8, horizon: int = 1, mode: 
     df_feat['fall_risk'] = (df_feat['weekly_ret'] < -0.05).astype(int)
 
     feature_cols = FEATURES + TIME_FEATURES
-    if mode in ['normal', 'incomplete', 'circular']:
-        df_slid = pd.concat([
-            (make_sliding if mode == 'normal' else
-             make_sliding_allow_incomplete if mode == 'incomplete' else
-             make_sliding_fully_circular)(df_feat, feature_cols, win=w, horizon=horizon, step=step)
-            for w in WINS
-        ], ignore_index=True)
-    else:
-        raise ValueError(f"Unknown mode: {mode}")
+
+    # 使用不完整窗口
+    df_slid = make_sliding_allow_incomplete(df_feat, feature_cols, win=win, horizon=horizon, step=step)
 
     return df_slid.reset_index(drop=True)
-
-
